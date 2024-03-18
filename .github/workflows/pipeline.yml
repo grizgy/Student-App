@@ -25,7 +25,6 @@ jobs:
 
    test-integration:
     needs: test-security
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest    
     steps:
     - name: Checkout repository 
@@ -41,8 +40,9 @@ jobs:
       run: npm test        
  
    deploy:
-      needs: test-integration
       runs-on: ubuntu-latest
+      if: github.ref == 'refs/heads/main'
+      needs: test-integration
       steps:
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
